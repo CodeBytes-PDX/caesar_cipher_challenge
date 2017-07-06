@@ -1,18 +1,62 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  constructor(){
+    super()
+    this.state = {
+      shift: 3,
+      input: "hello",
+      output: ""
+    }
+
+    this.inputChange = this.inputChange.bind(this)
+    this.outputChange = this.outputChange.bind(this)
+    this.shiftChange = this.shiftChange.bind(this)
+  }
+
+  runCipher(){
+
+  }
+
+  inputChange(e){
+    this.setState({
+      input: e.target.value
+    })
+  }
+
+  outputChange(e){
+    this.setState({
+      output: e.target.value
+    })
+  }
+
+  shiftChange(e){
+    this.setState({
+      shift: e.target.value
+    })
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log(nextState)
+  }
+
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+        <div>
+          <label>Shift:</label>
+          <input type="number" cols="3" value={this.state.shift} onChange={this.shiftChange}/>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div>
+          <label>Input:</label>
+          <input type="text" cols="5" value={this.state.input} onChange={this.inputChange}/>
+        </div>
+        <div>
+          <label>Output:</label>
+          <input type="text" cols="5" value={this.state.output} onChange={this.outputChange}/>
+        </div>
+        <button onClick={this.runCipher}>Encipher/Decipher</button>
       </div>
     );
   }
