@@ -14,7 +14,7 @@ def string_shift(string_in, shift_val)
     return string_out
 end
 
-if ARGV.size < 2
+if ARGV.size < 2 or ! ARGV[0].match(/^-?\d+/)
     $stderr.puts "usage:\t#{__FILE__} <shift> <string> [ <string> ... ]\n\tshift value of 0 will attempt a brute-force decoding"
     exit(1)
 end
@@ -40,10 +40,14 @@ if c_shift == 0
 	    matched_words += 1 if dict[c_word]
 	}
 	if matched_words / words.size > 0.9
-	    puts "'#{string_in}' shifted by #{c_shift} => '#{words}'; > 90% dictionary words"
+	    words_str = ""
+	    words.each { |w|
+		words_str += "#{w} "
+	    }
+	    words_str = words_str.sub(/\s+$/, '')
+	    puts "'#{string_in}' shifted by #{c_shift} => over 90% dictionary words:\n\t" + words_str
 	end
     }
 else
-    encoded = string_shift(string_in, c_shift)
-    puts encoded
+    puts string_shift(string_in, c_shift)
 end
